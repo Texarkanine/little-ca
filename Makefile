@@ -6,8 +6,7 @@ CAKEY=$(CADIR)/$(CANAME)CA.key
 CAPEM=$(CADIR)/$(CANAME)CA.pem
 
 .PHONY: ca
-ca:
-	$(MAKE) $(CAKEY) $(CAPEM)
+ca: $(CAKEY) $(CAPEM)
 
 $(CADIR):
 	mkdir -p "$(CADIR)"
