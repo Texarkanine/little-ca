@@ -5,15 +5,6 @@ SITEDIR ?= default
 CAKEY=$(CADIR)/$(CANAME)CA.key
 CAPEM=$(CADIR)/$(CANAME)CA.pem
 
-.PHONY: %.crt
-%.crt:
-	$(MAKE) $(SITEDIR)/$*.crt
-	@echo "Generated certificate for $*"
-
-.PHONY: ca
-ca:
-	$(MAKE) $(CAKEY) $(CAPEM)
-
 $(CADIR):
 	mkdir -p "$(CADIR)"
 
