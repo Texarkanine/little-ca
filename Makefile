@@ -3,7 +3,7 @@
 
 CANAME ?= little
 CADIR ?= _certificate-authority
-SITEDIR ?= default
+SITEDIR ?= sites
 
 # Generate config.mk from template if it doesn't exist
 config.mk: | config.mk.template
@@ -41,7 +41,7 @@ $(SITEDIR)/$(CANAME)-%.crt: $(SITEDIR)/$(CANAME)-%.csr $(SITEDIR)/%.ext | $(CADI
 $(SITEDIR)/$(CANAME)-%.csr: $(SITEDIR)/%.key
 	openssl req -new -key "$(SITEDIR)/$*.key" -out "$(SITEDIR)/$(CANAME)-$*.csr"
 
-$(SITEDIR)/%.ext: | $(SITEDIR)
+$(SITEDIR)/%.ext: template.ext | $(SITEDIR)
 	./generate_ext.sh template.ext > "$(SITEDIR)/$*.ext.tmp" \
 	&& mv "$(SITEDIR)/$*.ext.tmp" "$(SITEDIR)/$*.ext" \
 	|| (rm -f "$(SITEDIR)/$*.ext.tmp" "$(SITEDIR)/$*.ext" && false)
