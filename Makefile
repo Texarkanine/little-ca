@@ -21,7 +21,7 @@ $(CAPEM): $(CAKEY)
 %: $(SITEDIR)/%.crt
 	@echo "Generated certificate for $*"
 
-$(SITEDIR)/%.crt: $(CAKEY) $(CAPEM) $(SITEDIR)/$*.csr $(SITEDIR)/$*.ext
+$(SITEDIR)/%.crt: $(CAKEY) $(CAPEM) $(SITEDIR)/%.csr $(SITEDIR)/%.ext
 	openssl x509 -req -days 825 -sha256 -CAcreateserial \
 		-CA "$(CAPEM)" \
 		-CAkey "$(CAKEY)" \
@@ -29,7 +29,7 @@ $(SITEDIR)/%.crt: $(CAKEY) $(CAPEM) $(SITEDIR)/$*.csr $(SITEDIR)/$*.ext
 		-extfile "$(SITEDIR)/$*.ext" \
 		-out "$(SITEDIR)/$*.crt"
 
-$(SITEDIR)/%.csr: $(SITEDIR)/$*.key
+$(SITEDIR)/%.csr: $(SITEDIR)/%.key
 	openssl req -new -key "$(SITEDIR)/$*.key" -out "$(SITEDIR)/$*.csr"
 
 $(SITEDIR)/%.ext: $(SITEDIR)
