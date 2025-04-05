@@ -44,7 +44,7 @@ $(SITEDIR)/%.key: | $(SITEDIR)
 # User-friendly target that accepts any domain name
 .PHONY: %
 %:
-	@if [[ "$@" == *"/"* ]]; then \
+	@if echo "$@" | grep -q "/"; then \
 		echo "Error: Cannot use path in domain name"; \
 		exit 1; \
 	else \
