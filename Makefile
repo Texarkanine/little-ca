@@ -18,6 +18,9 @@ ca:
 # Mark files as precious to prevent Make from deleting them
 .PRECIOUS: $(SITEDIR)/%.key $(SITEDIR)/$(CANAME)-%.csr $(SITEDIR)/%.ext
 
+# Prevent Make from treating .ext.tmp as an intermediate file
+.INTERMEDIATE: $(SITEDIR)/%.ext.tmp
+
 $(CADIR):
 	mkdir -p "$(CADIR)"
 
