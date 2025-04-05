@@ -8,6 +8,6 @@ CANAME = little
 CADIR = _certificate-authority
 
 # Directory where site certificates are stored
-SITEDIR = default
+SITEDIR = sites
 
 # Add any other customizations below 

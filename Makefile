@@ -30,7 +30,7 @@ $(CADIR)/%CA.key: | $(CADIR)
 $(CADIR)/%CA.pem: $(CADIR)/%CA.key
 	openssl req -x509 -new -nodes -key "$<" -sha256 -days 1825 -out "$@"
 
-$(SITEDIR)/$(CANAME)-%.crt: $(CADIR)/$(CANAME)CA.pem $(SITEDIR)/$(CANAME)-%.csr $(SITEDIR)/%.ext
+$(SITEDIR)/$(CANAME)-%.crt: $(SITEDIR)/$(CANAME)-%.csr $(SITEDIR)/%.ext | $(CADIR)/$(CANAME)CA.pem $(CADIR)/$(CANAME)CA.key
 	openssl x509 -req -days 825 -sha256 -CAcreateserial \
 		-CA "$(CADIR)/$(CANAME)CA.pem" \
 		-CAkey "$(CADIR)/$(CANAME)CA.key" \
