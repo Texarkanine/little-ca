@@ -9,8 +9,8 @@ CAPEM=$(CADIR)/$(CANAME)CA.pem
 .PHONY: ca
 ca: $$(CAKEY) $$(CAPEM)
 
-$(CADIR):
-	mkdir -p "$(CADIR)"
+$$(CADIR):
+	mkdir -p "$$(CADIR)"
 
 $(SITEDIR):
 	mkdir -p "$(SITEDIR)"
