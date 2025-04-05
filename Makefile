@@ -5,8 +5,9 @@ SITEDIR ?= default
 CAKEY=$(CADIR)/$(CANAME)CA.key
 CAPEM=$(CADIR)/$(CANAME)CA.pem
 
+.SECONDEXPANSION:
 .PHONY: ca
-ca: $(CAKEY) $(CAPEM)
+ca: $$(CAKEY) $$(CAPEM)
 
 $(CADIR):
 	mkdir -p "$(CADIR)"
@@ -14,11 +15,11 @@ $(CADIR):
 $(SITEDIR):
 	mkdir -p "$(SITEDIR)"
 
-$(CAKEY): $(CADIR)
-	openssl genrsa -des3 -out "$(CAKEY)" 2048
+$$(CAKEY): $$(CADIR)
+	openssl genrsa -des3 -out "$$(CAKEY)" 2048
 
-$(CAPEM): $(CAKEY)
-	openssl req -x509 -new -nodes -key "$(CAKEY)" -sha256 -days 1825 -out "$(CAPEM)"
+$$(CAPEM): $$(CAKEY)
+	openssl req -x509 -new -nodes -key "$$(CAKEY)" -sha256 -days 1825 -out "$$(CAPEM)"
 
 $(SITEDIR)/%.crt: $(CAKEY) $(CAPEM) $(SITEDIR)/%.csr $(SITEDIR)/%.ext
 	openssl x509 -req -days 825 -sha256 -CAcreateserial \
