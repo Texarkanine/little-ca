@@ -5,6 +5,10 @@ SITEDIR ?= default
 CAKEY=$(CADIR)/$(CANAME)CA.key
 CAPEM=$(CADIR)/$(CANAME)CA.pem
 
+.PHONY: ca
+ca:
+	$(MAKE) $(CAKEY) $(CAPEM)
+
 $(CADIR):
 	mkdir -p "$(CADIR)"
 
