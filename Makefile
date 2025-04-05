@@ -42,7 +42,9 @@ $(SITEDIR)/$(CANAME)-%.csr: $(SITEDIR)/%.key
 	openssl req -new -key "$(SITEDIR)/$*.key" -out "$(SITEDIR)/$(CANAME)-$*.csr"
 
 $(SITEDIR)/%.ext: | $(SITEDIR)
-	./generate_ext.sh template.ext > "$(SITEDIR)/$*.ext"
+	./generate_ext.sh template.ext > "$(SITEDIR)/$*.ext.tmp" \
+	&& mv "$(SITEDIR)/$*.ext.tmp" "$(SITEDIR)/$*.ext" \
+	|| rm "$(SITEDIR)/$*.ext.tmp"
 
 $(SITEDIR)/%.key: | $(SITEDIR)
 	openssl genrsa -out "$(SITEDIR)/$*.key" 2048
