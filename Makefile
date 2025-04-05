@@ -2,29 +2,26 @@ CANAME ?= little
 CADIR ?= ./_certificate-authority
 SITEDIR ?= default
 
-CAKEY=$(CADIR)/$(CANAME)CA.key
-CAPEM=$(CADIR)/$(CANAME)CA.pem
-
-.SECONDEXPANSION:
 .PHONY: ca
-ca: $$(CAKEY) $$(CAPEM)
+ca: $(CADIR)/$(CANAME)CA.key $(CADIR)/$(CANAME)CA.pem
+	@echo "Generated CA files for $(CANAME)"
 
-$$(CADIR):
-	mkdir -p "$$(CADIR)"
+$(CADIR):
+	mkdir -p "$(CADIR)"
 
 $(SITEDIR):
 	mkdir -p "$(SITEDIR)"
 
-$$(CAKEY): $$(CADIR)
-	openssl genrsa -des3 -out "$$(CAKEY)" 2048
+$(CADIR)/%CA.key: $(CADIR)
+	openssl genrsa -des3 -out "$@" 2048
 
-$$(CAPEM): $$(CAKEY)
-	openssl req -x509 -new -nodes -key "$$(CAKEY)" -sha256 -days 1825 -out "$$(CAPEM)"
+$(CADIR)/%CA.pem: $(CADIR)/%CA.key
+	openssl req -x509 -new -nodes -key "$<" -sha256 -days 1825 -out "$@"
 
-$(SITEDIR)/%.crt: $(CAKEY) $(CAPEM) $(SITEDIR)/%.csr $(SITEDIR)/%.ext
+$(SITEDIR)/%.crt: $(CADIR)/$(CANAME)CA.pem $(SITEDIR)/%.csr $(SITEDIR)/%.ext
 	openssl x509 -req -days 825 -sha256 -CAcreateserial \
-		-CA "$(CAPEM)" \
-		-CAkey "$(CAKEY)" \
+		-CA "$(CADIR)/$(CANAME)CA.pem" \
+		-CAkey "$(CADIR)/$(CANAME)CA.key" \
 		-in "$(SITEDIR)/$*.csr" \
 		-extfile "$(SITEDIR)/$*.ext" \
 		-out "$(SITEDIR)/$*.crt"
@@ -37,3 +34,7 @@ $(SITEDIR)/%.ext: $(SITEDIR)
 
 $(SITEDIR)/%.key: $(SITEDIR)
 	openssl genrsa -out "$(SITEDIR)/$*.key" 2048
+
+# Pattern rule for short names
+%: $(SITEDIR)/%.crt
+	@echo "Generated certificate for $*"
