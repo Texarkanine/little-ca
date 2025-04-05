@@ -6,7 +6,7 @@ CADIR ?= _certificate-authority
 SITEDIR ?= default
 
 # Generate config.mk from template if it doesn't exist
-config.mk: config.mk.template
+config.mk: | config.mk.template
 	@echo "Generating config.mk from template..."
 	@cp config.mk.template config.mk
 	@echo "Created config.mk with default values. Edit this file to customize your settings."
