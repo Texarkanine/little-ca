@@ -34,7 +34,3 @@ $(SITEDIR)/%.ext: $(SITEDIR)
 
 $(SITEDIR)/%.key: $(SITEDIR)
 	openssl genrsa -out "$(SITEDIR)/$*.key" 2048
-
-# Pattern rule for short names
-%: $(SITEDIR)/%.crt
-	@echo "Generated certificate for $*"
