@@ -19,6 +19,7 @@ $(CAPEM): $(CAKEY)
 
 .PHONY: %
 %: $(SITEDIR)/%.crt
+	@echo "Generated certificate for $*"
 
 $(SITEDIR)/%.crt: $(CAKEY) $(CAPEM) $(SITEDIR)/$*.csr $(SITEDIR)/$*.ext
 	openssl x509 -req -days 825 -sha256 -CAcreateserial \
