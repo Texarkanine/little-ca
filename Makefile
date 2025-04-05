@@ -5,6 +5,14 @@ SITEDIR ?= default
 CAKEY=$(CADIR)/$(CANAME)CA.key
 CAPEM=$(CADIR)/$(CANAME)CA.pem
 
+.PHONY: %.crt
+%.crt:
+	$(MAKE) SITEDIR=$(SITEDIR) $(SITEDIR)/$*.crt
+	@echo "Generated certificate for $*"
+
+.PHONY: ca
+ca: $(CAKEY) $(CAPEM)
+
 $(CADIR):
 	mkdir -p "$(CADIR)"
 
@@ -16,10 +24,6 @@ $(CAKEY): $(CADIR)
 
 $(CAPEM): $(CAKEY)
 	openssl req -x509 -new -nodes -key "$(CAKEY)" -sha256 -days 1825 -out "$(CAPEM)"
-
-.PHONY: %.crt
-%.crt: $(SITEDIR)/%.crt
-	@echo "Generated certificate for $*"
 
 $(SITEDIR)/%.crt: $(CAKEY) $(CAPEM) $(SITEDIR)/%.csr $(SITEDIR)/%.ext
 	openssl x509 -req -days 825 -sha256 -CAcreateserial \
