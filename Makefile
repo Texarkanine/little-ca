@@ -5,6 +5,12 @@ CANAME ?= little
 CADIR ?= _certificate-authority
 SITEDIR ?= default
 
+# Generate config.mk from template if it doesn't exist
+config.mk: config.mk.template
+	@echo "Generating config.mk from template..."
+	@cp config.mk.template config.mk
+	@echo "Created config.mk with default values. Edit this file to customize your settings."
+
 .PHONY: ca
 ca: 
 	$(MAKE) $(CADIR)/$(CANAME)CA.key $(CADIR)/$(CANAME)CA.pem
@@ -44,9 +50,9 @@ $(SITEDIR)/%.key: | $(SITEDIR)
 # User-friendly target that accepts any domain name
 .PHONY: %
 %:
-	@if echo "$@" | grep -q "/"; then \
-		echo "Error: Cannot use path in domain name"; \
-		exit 1; \
-	else \
-		$(MAKE) $(SITEDIR)/$(CANAME)-$@.crt; \
-	fi
+	$(MAKE) $(SITEDIR)/$(CANAME)-$@.crt
+
+# Prevent the % target from matching config.mk
+config.mk:
+	@echo "Error: config.mk is a configuration file, not a domain name"
+	@exit 1
