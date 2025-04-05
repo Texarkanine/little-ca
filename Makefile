@@ -18,9 +18,6 @@ ca:
 # Mark files as precious to prevent Make from deleting them
 .PRECIOUS: $(SITEDIR)/%.key $(SITEDIR)/$(CANAME)-%.csr $(SITEDIR)/%.ext
 
-# Prevent Make from treating .ext.tmp as an intermediate file
-.INTERMEDIATE: $(SITEDIR)/%.ext.tmp
-
 $(CADIR):
 	mkdir -p "$(CADIR)"
 
@@ -44,7 +41,7 @@ $(SITEDIR)/$(CANAME)-%.crt: $(SITEDIR)/$(CANAME)-%.csr $(SITEDIR)/%.ext | $(CADI
 $(SITEDIR)/$(CANAME)-%.csr: $(SITEDIR)/%.key
 	openssl req -new -key "$(SITEDIR)/$*.key" -out "$(SITEDIR)/$(CANAME)-$*.csr"
 
-$(SITEDIR)/%.ext: template.ext | $(SITEDIR)
+$(SITEDIR)/%.ext: | $(SITEDIR)
 	./generate_ext.sh template.ext > "$(SITEDIR)/$*.ext.tmp" \
 	&& mv "$(SITEDIR)/$*.ext.tmp" "$(SITEDIR)/$*.ext" \
 	|| (rm -f "$(SITEDIR)/$*.ext.tmp" "$(SITEDIR)/$*.ext" && false)
