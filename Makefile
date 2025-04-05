@@ -7,11 +7,12 @@ CAPEM=$(CADIR)/$(CANAME)CA.pem
 
 .PHONY: %.crt
 %.crt:
-	$(MAKE) SITEDIR=$(SITEDIR) $(SITEDIR)/$*.crt
+	$(MAKE) $(SITEDIR)/$*.crt
 	@echo "Generated certificate for $*"
 
 .PHONY: ca
-ca: $(CAKEY) $(CAPEM)
+ca:
+	$(MAKE) $(CAKEY) $(CAPEM)
 
 $(CADIR):
 	mkdir -p "$(CADIR)"
