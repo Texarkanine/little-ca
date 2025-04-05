@@ -3,7 +3,11 @@ CADIR ?= ./_certificate-authority
 SITEDIR ?= default
 
 .PHONY: ca
-ca: $(CADIR)/$(CANAME)CA.key $(CADIR)/$(CANAME)CA.pem
+ca: 
+	$(MAKE) $(CADIR)/$(CANAME)CA.key $(CADIR)/$(CANAME)CA.pem
+
+# Mark files as precious to prevent Make from deleting them
+.PRECIOUS: $(SITEDIR)/%.key $(SITEDIR)/%.csr $(SITEDIR)/%.ext
 
 $(CADIR):
 	mkdir -p "$(CADIR)"
@@ -23,7 +27,7 @@ $(SITEDIR)/%.crt: $(CADIR)/$(CANAME)CA.pem $(SITEDIR)/%.csr $(SITEDIR)/%.ext
 		-CAkey "$(CADIR)/$(CANAME)CA.key" \
 		-in "$(SITEDIR)/$*.csr" \
 		-extfile "$(SITEDIR)/$*.ext" \
-		-out "$(SITEDIR)/$*.crt"
+		-out "$@"
 
 $(SITEDIR)/%.csr: $(SITEDIR)/%.key
 	openssl req -new -key "$(SITEDIR)/$*.key" -out "$(SITEDIR)/$*.csr"
