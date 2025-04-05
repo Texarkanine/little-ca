@@ -15,8 +15,15 @@ config.mk: | config.mk.template
 ca: 
 	$(MAKE) $(CADIR)/$(CANAME)CA.key $(CADIR)/$(CANAME)CA.pem
 
-# Mark files as precious to prevent Make from deleting them
-.NOTINTERMEDIATE: $(SITEDIR)/%.key $(SITEDIR)/$(CANAME)-%.csr $(SITEDIR)/%.ext
+# Detect if we're in a submake
+ifeq ($(MAKELEVEL),0)
+.PRECIOUS: $(SITEDIR)/%.key $(SITEDIR)/$(CANAME)-%.csr $(SITEDIR)/%.ext
+else
+# In submake, extract the domain from the target and set .PRECIOUS for specific files
+TARGET := $(firstword $(MAKECMDGOALS))
+DOMAIN := $(subst $(CANAME)-,,$(basename $(notdir $(TARGET))))
+.PRECIOUS: $(SITEDIR)/$(DOMAIN).key $(SITEDIR)/$(CANAME)-$(DOMAIN).csr $(SITEDIR)/$(DOMAIN).ext
+endif
 
 $(CADIR):
 	mkdir -p "$(CADIR)"
@@ -53,3 +60,20 @@ $(SITEDIR)/%.key: | $(SITEDIR)
 .PHONY: %
 %:
 	$(MAKE) $(SITEDIR)/$(CANAME)-$@.crt
+
+# Debug target to print out what targets are marked as .PRECIOUS
+.PHONY: debug-precious
+debug-precious:
+	@echo "MAKELEVEL: $(MAKELEVEL)"
+	@echo "MAKECMDGOALS: $(MAKECMDGOALS)"
+	@if [ "$(MAKELEVEL)" = "0" ]; then \
+		echo "In main Make, .PRECIOUS targets:"; \
+		echo "  $(SITEDIR)/%.key"; \
+		echo "  $(SITEDIR)/$(CANAME)-%.csr"; \
+		echo "  $(SITEDIR)/%.ext"; \
+	else \
+		echo "In submake, .PRECIOUS targets:"; \
+		echo "  $(SITEDIR)/$(DOMAIN).key"; \
+		echo "  $(SITEDIR)/$(CANAME)-$(DOMAIN).csr"; \
+		echo "  $(SITEDIR)/$(DOMAIN).ext"; \
+	fi
