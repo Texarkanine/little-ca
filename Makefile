@@ -16,7 +16,7 @@ ca:
 	$(MAKE) $(CADIR)/$(CANAME)CA.key $(CADIR)/$(CANAME)CA.pem
 
 # Mark files as precious to prevent Make from deleting them
-.PRECIOUS: $(SITEDIR)/%.key $(SITEDIR)/%.csr $(SITEDIR)/%.ext
+.PRECIOUS: $(SITEDIR)/%.key $(SITEDIR)/$(CANAME)-%.csr $(SITEDIR)/%.ext
 
 $(CADIR):
 	mkdir -p "$(CADIR)"
