@@ -51,8 +51,3 @@ $(SITEDIR)/%.key: | $(SITEDIR)
 .PHONY: %
 %:
 	$(MAKE) $(SITEDIR)/$(CANAME)-$@.crt
-
-# Prevent the % target from matching config.mk
-config.mk:
-	@echo "Error: config.mk is a configuration file, not a domain name"
-	@exit 1
