@@ -4,7 +4,6 @@ SITEDIR ?= default
 
 .PHONY: ca
 ca: $(CADIR)/$(CANAME)CA.key $(CADIR)/$(CANAME)CA.pem
-	@echo "Generated CA files for $(CANAME)"
 
 $(CADIR):
 	mkdir -p "$(CADIR)"
