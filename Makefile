@@ -15,7 +15,7 @@ $(CADIR):
 $(SITEDIR):
 	mkdir -p "$(SITEDIR)"
 
-$(CADIR)/%CA.key: $(CADIR)
+$(CADIR)/%CA.key: | $(CADIR)
 	openssl genrsa -des3 -out "$@" 2048
 
 $(CADIR)/%CA.pem: $(CADIR)/%CA.key
@@ -32,8 +32,8 @@ $(SITEDIR)/%.crt: $(CADIR)/$(CANAME)CA.pem $(SITEDIR)/%.csr $(SITEDIR)/%.ext
 $(SITEDIR)/%.csr: $(SITEDIR)/%.key
 	openssl req -new -key "$(SITEDIR)/$*.key" -out "$(SITEDIR)/$*.csr"
 
-$(SITEDIR)/%.ext: $(SITEDIR)
+$(SITEDIR)/%.ext: | $(SITEDIR)
 	./generate_ext.sh template.ext > "$(SITEDIR)/$*.ext"
 
-$(SITEDIR)/%.key: $(SITEDIR)
+$(SITEDIR)/%.key: | $(SITEDIR)
 	openssl genrsa -out "$(SITEDIR)/$*.key" 2048
