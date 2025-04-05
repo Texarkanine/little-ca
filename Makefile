@@ -37,3 +37,8 @@ $(SITEDIR)/%.ext: | $(SITEDIR)
 
 $(SITEDIR)/%.key: | $(SITEDIR)
 	openssl genrsa -out "$(SITEDIR)/$*.key" 2048
+
+# User-friendly target that accepts any domain name
+.PHONY: %
+%:
+	$(MAKE) $(SITEDIR)/$(CANAME)-$@.crt
