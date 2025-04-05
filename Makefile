@@ -44,4 +44,9 @@ $(SITEDIR)/%.key: | $(SITEDIR)
 # User-friendly target that accepts any domain name
 .PHONY: %
 %:
-	$(MAKE) $(SITEDIR)/$(CANAME)-$@.crt
+	@if [[ "$@" == *"/"* ]]; then \
+		echo "Error: Cannot use path in domain name"; \
+		exit 1; \
+	else \
+		$(MAKE) $(SITEDIR)/$(CANAME)-$@.crt; \
+	fi
