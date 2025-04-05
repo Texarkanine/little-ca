@@ -17,8 +17,8 @@ $(CAKEY): $(CADIR)
 $(CAPEM): $(CAKEY)
 	openssl req -x509 -new -nodes -key "$(CAKEY)" -sha256 -days 1825 -out "$(CAPEM)"
 
-.PHONY: %
-%: $(SITEDIR)/%.crt
+.PHONY: %.crt
+%.crt: $(SITEDIR)/%.crt
 	@echo "Generated certificate for $*"
 
 $(SITEDIR)/%.crt: $(CAKEY) $(CAPEM) $(SITEDIR)/%.csr $(SITEDIR)/%.ext
