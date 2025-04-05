@@ -50,25 +50,32 @@ if [ -z "$domains" ] && [ -z "$ips" ]; then
     exit 1
 fi
 
+# Create a temporary file for the output
+output_temp=$(mktemp)
+trap 'rm -f "$output_temp"' EXIT
+
+# Copy the template to the output file
+cp "$template_file" "$output_temp"
+
 # Generate DNS entries
 if [ -n "$domains" ]; then
-    dns_entries=$(echo "$domains" | awk '{print "DNS." NR " = " $0}')
-else
-    dns_entries=""
+    dns_section=""
+    count=1
+    echo "$domains" | while read -r domain; do
+        echo "DNS.$count = $domain" >> "$output_temp"
+        count=$((count + 1))
+    done
 fi
 
 # Generate IP entries
 if [ -n "$ips" ]; then
-    ip_entries=$(echo "$ips" | awk '{print "IP." NR " = " $0}')
-else
-    ip_entries=""
+    ip_section=""
+    count=1
+    echo "$ips" | while read -r ip; do
+        echo "IP.$count = $ip" >> "$output_temp"
+        count=$((count + 1))
+    done
 fi
 
-# Check if template contains the required placeholders
-if ! grep -q "DNS_ENTRIES\|IP_ENTRIES" "$template_file"; then
-    echo "Error: Template file does not contain required placeholders (DNS_ENTRIES or IP_ENTRIES)" >&2
-    exit 1
-fi
-
-# Generate the .ext file content to stdout
-sed -e "s/DNS_ENTRIES/$dns_entries/" -e "s/IP_ENTRIES/$ip_entries/" "$template_file"
+# Output the final file
+cat "$output_temp"
