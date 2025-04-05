@@ -44,7 +44,7 @@ $(SITEDIR)/$(CANAME)-%.csr: $(SITEDIR)/%.key
 $(SITEDIR)/%.ext: | $(SITEDIR)
 	./generate_ext.sh template.ext > "$(SITEDIR)/$*.ext.tmp" \
 	&& mv "$(SITEDIR)/$*.ext.tmp" "$(SITEDIR)/$*.ext" \
-	|| rm "$(SITEDIR)/$*.ext.tmp"
+	|| (rm -f "$(SITEDIR)/$*.ext.tmp" && exit 1)
 
 $(SITEDIR)/%.key: | $(SITEDIR)
 	openssl genrsa -out "$(SITEDIR)/$*.key" 2048
