@@ -1,0 +1,13 @@
+# User configuration
+config.mk
+
+# Generated certificate files
+_certificate-authority/
+default/
+
+# OpenSSL serial files
+*.srl
+
+# Backup files
+*~
+*.bak 

@@ -1,0 +1,13 @@
+# Sample configuration file for little-ca
+# Copy this file to config.mk and modify as needed
+
+# Name of the Certificate Authority
+CANAME = little
+
+# Directory where CA files are stored
+CADIR = _certificate-authority
+
+# Directory where site certificates are stored
+SITEDIR = default
+
+# Add any other customizations below 

@@ -1,5 +1,8 @@
+# Include user configuration if it exists
+-include config.mk
+
 CANAME ?= little
-CADIR ?= ./_certificate-authority
+CADIR ?= _certificate-authority
 SITEDIR ?= default
 
 .PHONY: ca
