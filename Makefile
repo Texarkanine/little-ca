@@ -21,16 +21,16 @@ $(CADIR)/%CA.key: | $(CADIR)
 $(CADIR)/%CA.pem: $(CADIR)/%CA.key
 	openssl req -x509 -new -nodes -key "$<" -sha256 -days 1825 -out "$@"
 
-$(SITEDIR)/%.crt: $(CADIR)/$(CANAME)CA.pem $(SITEDIR)/%.csr $(SITEDIR)/%.ext
+$(SITEDIR)/$(CANAME)-%.crt: $(CADIR)/$(CANAME)CA.pem $(SITEDIR)/$(CANAME)-%.csr $(SITEDIR)/%.ext
 	openssl x509 -req -days 825 -sha256 -CAcreateserial \
 		-CA "$(CADIR)/$(CANAME)CA.pem" \
 		-CAkey "$(CADIR)/$(CANAME)CA.key" \
-		-in "$(SITEDIR)/$*.csr" \
+		-in "$(SITEDIR)/$(CANAME)-$*.csr" \
 		-extfile "$(SITEDIR)/$*.ext" \
 		-out "$@"
 
-$(SITEDIR)/%.csr: $(SITEDIR)/%.key
-	openssl req -new -key "$(SITEDIR)/$*.key" -out "$(SITEDIR)/$*.csr"
+$(SITEDIR)/$(CANAME)-%.csr: $(SITEDIR)/%.key
+	openssl req -new -key "$(SITEDIR)/$*.key" -out "$(SITEDIR)/$(CANAME)-$*.csr"
 
 $(SITEDIR)/%.ext: | $(SITEDIR)
 	./generate_ext.sh template.ext > "$(SITEDIR)/$*.ext"
