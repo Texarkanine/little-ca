@@ -17,23 +17,23 @@ $(CAKEY): $(CADIR)
 $(CAPEM): $(CAKEY)
 	openssl req -x509 -new -nodes -key "$(CAKEY)" -sha256 -days 1825 -out "$(CAPEM)"
 
-.PHONY: $(wildcard *.*)
-$(wildcard *.*): $(SITEDIR)/$@.crt
-	@echo "Generated certificate for $@"
+.PHONY: %
+%: $(SITEDIR)/%.crt
+	@echo "Generated certificate for $*"
 
 $(SITEDIR)/%.crt: $(CAKEY) $(CAPEM) $(SITEDIR)/$*.csr $(SITEDIR)/$*.ext
 	openssl x509 -req -days 825 -sha256 -CAcreateserial \
 		-CA "$(CAPEM)" \
 		-CAkey "$(CAKEY)" \
-		-in $(SITEDIR)/$*.csr \
-		-extfile $(SITEDIR)/$*.ext \
-		-out $(SITEDIR)/$*.crt
+		-in "$(SITEDIR)/$*.csr" \
+		-extfile "$(SITEDIR)/$*.ext" \
+		-out "$(SITEDIR)/$*.crt"
 
 $(SITEDIR)/%.csr: $(SITEDIR)/$*.key
-	openssl req -new -key $(SITEDIR)/$*.key -out $(SITEDIR)/$*.csr
+	openssl req -new -key "$(SITEDIR)/$*.key" -out "$(SITEDIR)/$*.csr"
 
 $(SITEDIR)/%.ext: $(SITEDIR)
-	./generate_ext.sh template.ext > $@
+	./generate_ext.sh template.ext > "$(SITEDIR)/$*.ext"
 
 $(SITEDIR)/%.key: $(SITEDIR)
-	openssl genrsa -out $*.key 2048
+	openssl genrsa -out "$(SITEDIR)/$*.key" 2048
