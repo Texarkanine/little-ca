@@ -62,5 +62,6 @@ $(SITEDIR)/%.key: | $(SITEDIR)
 # User-friendly target that accepts any domain name
 .PHONY: %
 %:
-	@echo "MAKELEVEL: $(MAKELEVEL)"
-	$(MAKE) $(SITEDIR)/$(CANAME)-$@.crt
+	@if [ "$(MAKELEVEL)" = "0" ]; then \
+		$(MAKE) $(SITEDIR)/$(CANAME)-$@.crt; \
+	fi
