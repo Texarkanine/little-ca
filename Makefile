@@ -5,9 +5,6 @@ CANAME ?= little
 CADIR ?= _certificate-authority
 SITEDIR ?= sites
 
-# Mark source files as not intermediate to prevent Make from trying to build them
-.NOTINTERMEDIATE: config.mk.template
-
 # Generate config.mk from template if it doesn't exist
 config.mk: | config.mk.template
 	@if [ ! -f config.mk ]; then \
@@ -24,6 +21,9 @@ ca:
 TARGET := $(firstword $(MAKECMDGOALS))
 DOMAIN := $(subst $(CANAME)-,,$(basename $(notdir $(TARGET))))
 .PRECIOUS: $(SITEDIR)/$(DOMAIN).key $(SITEDIR)/$(CANAME)-$(DOMAIN).csr $(SITEDIR)/$(DOMAIN).ext
+
+# Mark source files as not intermediate to prevent Make from trying to build them
+.NOTINTERMEDIATE: config.mk.template template.ext generate_ext.sh
 
 $(CADIR):
 	@echo "MAKELEVEL: $(MAKELEVEL)"
