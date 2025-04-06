@@ -53,9 +53,9 @@ Give the `.pem` file for `${CANAME}` to all clients that will attempt to connect
 If a certificate expires or you otherwise need to reissue it,
 
 1. delete the existing cert
-   `rm sites/little-my-recipient.crt`
+   `rm sites/littlelan-my-recipient.crt`
 2. explicitly `make` the cert:
-   `make CANAME=little sites/little-my-recipient.crt`
+   `make CANAME=littlelan sites/littlelan-my-recipient.crt`
 
 The above will re-use the existing `.key` and `.ext` for `my-recipient`.
 
@@ -128,8 +128,8 @@ By creating a CA, installing that CA as a root CA in all my systems, and then is
          Enter IP addresses (one per line, press Ctrl+D when done):
          192.168.1.254
 
-3. use `sites/little-pi.hole.crt` as the SSL cert for your PiHole
-4. install `_certificate-authority/littleCA.pem` as a root certificate authority on any system that will connect to the PiHole over SSL
+3. use `sites/littlelan-pi.hole.crt` as the SSL cert for your PiHole
+4. install `_certificate-authority/littlelanCA.pem` as a root certificate authority on any system that will connect to the PiHole over SSL
 
 # Credits
 
