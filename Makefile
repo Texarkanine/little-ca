@@ -20,10 +20,7 @@ ca:
 
 TARGET := $(firstword $(MAKECMDGOALS))
 DOMAIN := $(subst $(CANAME)-,,$(basename $(notdir $(TARGET))))
-.PRECIOUS: $(SITEDIR)/$(DOMAIN).key $(SITEDIR)/$(CANAME)-$(DOMAIN).csr $(SITEDIR)/$(DOMAIN).ext
-
-# Mark source files as not intermediate to prevent Make from trying to build them
-.NOTINTERMEDIATE: config.mk.template template.ext generate_ext.sh
+.PRECIOUS: $(SITEDIR)/$(DOMAIN).key $(SITEDIR)/$(CANAME)-$(DOMAIN).csr $(SITEDIR)/$(DOMAIN).ext $(CADIR)/%CA.key $(CADIR)/%CA.pem
 
 $(CADIR):
 	@echo "MAKELEVEL: $(MAKELEVEL)"
