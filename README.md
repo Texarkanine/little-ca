@@ -12,10 +12,16 @@ For example, a [pihole](https://pi-hole.net/).
    make ca
    ```
 
+   1. You will be asked for a passphrase three times. Be sure you remember it; you'll need this passphrase to issue certificates with your authority!
+   2. You'll then be asked to fill out the details of your Certificate Authority; these will be used in your "root certificate."
+
 2. Generate a certificate for a domain:
    ```
    make example.com
    ```
+
+   1. You will be asked for details of the domain; these will be used in its certificate.
+   2. You will then be asked for the domain name(s) and IP address(es) that the certificate is valid for.
 
 # Usage
 
