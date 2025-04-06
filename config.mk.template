@@ -9,5 +9,3 @@ CADIR = _certificate-authority
 
 # Directory where site certificates are stored
 SITEDIR = sites
-
-# Add any other customizations below 
