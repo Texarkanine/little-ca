@@ -21,7 +21,7 @@ For example, a [pihole](https://pi-hole.net/).
 
 ## Configuration
 
-You can customize the behavior of Little CA by creating a `config.mk` file. This file allows you to set default values for various options without having to specify them on the command line each time.
+You can customize the behavior of littlelan CA by creating a `config.mk` file. This file allows you to set default values for various options without having to specify them on the command line each time.
 This file will be created automatically from [config.mk.template](./config.mk.template) the first time any command is run.
 
 This file allows you to specify *defaults* for your certificate creation processes.
