@@ -2,12 +2,12 @@
 config.mk
 
 # Generated certificate files
-_certificate-authority/
-default/
+authorities/
+sites/
 
 # OpenSSL serial files
 *.srl
 
 # Backup files
 *~
-*.bak 
+*.bak

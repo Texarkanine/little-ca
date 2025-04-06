@@ -1,4 +1,4 @@
-# Little CA
+# Little LAN Certificate Authority
 
 A tool for creating your own little Certificate Authority and issuing certificates with it.
 Useful for generating certificates for devices on your LAN that either don't have TLDs, don't have public IPs, or some combination of the two.

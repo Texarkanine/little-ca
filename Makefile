@@ -1,8 +1,8 @@
 # Include user configuration if it exists
 -include config.mk
 
-CANAME ?= little
-CADIR ?= _certificate-authority
+CANAME ?= littlelan
+CADIR ?= authorities
 SITEDIR ?= sites
 
 # Generate config.mk from template if it doesn't exist
