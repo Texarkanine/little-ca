@@ -1,0 +1,13 @@
+# User configuration
+config.mk
+
+# Generated certificate files
+authorities/
+sites/
+
+# OpenSSL serial files
+*.srl
+
+# Backup files
+*~
+*.bak
