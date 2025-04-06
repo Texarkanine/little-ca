@@ -50,11 +50,18 @@ Give the `.pem` file for `${CANAME}` to all clients that will attempt to connect
 
 ### Regenerating Certificates
 
-If a certificate expires or you otherwise need to reissue it, run
+If a certificate expires or you otherwise need to reissue it,
+
+1. delete the existing cert
+   `rm sites/little-my-recipient.crt`
+2. explicitly `make` the cert:
+   `make CANAME=little sites/little-my-recipient.crt`
+
+The above will re-use the existing `.key` and `.ext` for `my-recipient`.
 
 ## Working with Multiple CAs
 
-## Creating a CA with a Specific Name
+### Creating a CA with a Specific Name
 
 You can create a Certificate Authority with a custom name in two ways:
 
@@ -75,7 +82,7 @@ You can create a Certificate Authority with a custom name in two ways:
 
 This will create CA files with your custom name: `_certificate-authority/mycaCA.key` and `_certificate-authority/mycaCA.pem`.
 
-## Using a Specific CA for Certificates
+### Using a Specific CA for Certificates
 
 When generating certificates, you can specify which CA to use:
 

@@ -69,6 +69,5 @@ $(SITEDIR)/%.key: | $(SITEDIR)
 %:
 	@echo "MAKELEVEL: $(MAKELEVEL)"
 	@if [ "$(MAKELEVEL)" = "0" ]; then \
-		@echo "Nothing matched dollar-at=[$@]; fell through to wildcard; going to recur..." \
 		$(MAKE) $(SITEDIR)/$(CANAME)-$@.crt; \
 	fi
