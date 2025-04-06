@@ -86,7 +86,7 @@ You can create a Certificate Authority with a custom name in two ways:
    make CANAME=myca ca
    ```
 
-This will create CA files with your custom name: `_certificate-authority/mycaCA.key` and `_certificate-authority/mycaCA.pem`.
+This will create CA files with your custom name: `authorities/mycaCA.key` and `authorities/mycaCA.pem`.
 
 ### Using a Specific CA for Certificates
 
