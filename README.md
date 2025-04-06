@@ -38,7 +38,7 @@ See your `config.mk` or [config.mk.template](./config.mk.template) for available
 
 To issue a certificate for a site, just run
 
-   make my-recipient
+      make my-recipient
 
 Where `my-recipient` will be used in the file name(s) of the generated files. It does not have to be a FQDN, but it's fine if it is; `make my.site.com` works, too.
 
