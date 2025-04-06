@@ -5,7 +5,7 @@
 CANAME = littlelan
 
 # Directory where CA files are stored
-CADIR = _certificate-authority
+CADIR = authorities
 
 # Directory where site certificates are stored
 SITEDIR = sites
