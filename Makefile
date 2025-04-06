@@ -7,9 +7,11 @@ SITEDIR ?= sites
 
 # Generate config.mk from template if it doesn't exist
 config.mk: | config.mk.template
-	@echo "Generating config.mk from template..."
-	@cp config.mk.template config.mk
-	@echo "Created config.mk with default values. Edit this file to customize your settings."
+	@if [ ! -f config.mk ]; then \
+		echo "Generating config.mk from template..."; \
+		cp config.mk.template config.mk; \
+		echo "Created config.mk with default values. Edit this file to customize your settings."; \
+	fi
 
 .PHONY: ca
 ca:
@@ -61,7 +63,7 @@ $(SITEDIR)/%.key: | $(SITEDIR)
 
 # User-friendly target that accepts any domain name
 .PHONY: %
-%::
+%:
 	@echo "MAKELEVEL: $(MAKELEVEL)"
 	@if [ "$(MAKELEVEL)" = "0" ]; then \
 		$(MAKE) $(SITEDIR)/$(CANAME)-$@.crt; \
