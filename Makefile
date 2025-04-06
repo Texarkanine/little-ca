@@ -5,6 +5,9 @@ CANAME ?= little
 CADIR ?= _certificate-authority
 SITEDIR ?= sites
 
+# Mark source files as not intermediate to prevent Make from trying to build them
+.NOTINTERMEDIATE: config.mk.template
+
 # Generate config.mk from template if it doesn't exist
 config.mk: | config.mk.template
 	@if [ ! -f config.mk ]; then \
