@@ -135,7 +135,7 @@ By creating a CA, installing that CA as a root CA in all my systems, and then is
          192.168.1.254
 
 3. use `sites/littlelan-pi.hole.crt` as the SSL cert for your PiHole
-4. install `_certificate-authority/littlelanCA.pem` as a root certificate authority on any system that will connect to the PiHole over SSL
+4. install `authorities/littlelanCA.pem` as a root certificate authority on any system that will connect to the PiHole over SSL
 
 # Credits
 
