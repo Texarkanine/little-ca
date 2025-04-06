@@ -6,7 +6,6 @@ CADIR ?= _certificate-authority
 SITEDIR ?= sites
 
 # Generate config.mk from template if it doesn't exist
-.PHONY: config.mk.template
 config.mk: | config.mk.template
 	@echo "Generating config.mk from template..."
 	@cp config.mk.template config.mk
