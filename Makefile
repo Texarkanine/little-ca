@@ -67,8 +67,8 @@ $(SITEDIR)/%.key: | $(SITEDIR)
 # User-friendly target that accepts any domain name
 .PHONY: %
 %:
-	@echo "Nothing matched $$@=[$@]; fell through to wildcard; going to recur..."
 	@echo "MAKELEVEL: $(MAKELEVEL)"
 	@if [ "$(MAKELEVEL)" = "0" ]; then \
+		@echo "Nothing matched dollar-at=[$@]; fell through to wildcard; going to recur..." \
 		$(MAKE) $(SITEDIR)/$(CANAME)-$@.crt; \
 	fi
