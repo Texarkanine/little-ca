@@ -34,6 +34,20 @@ This file allows you to specify *defaults* for your certificate creation process
 
 See your `config.mk` or [config.mk.template](./config.mk.template) for available options.
 
+## Testing CA Passphrase
+
+If you need to verify that you remember the passphrase for your Certificate Authority key, you can use:
+
+```
+make test-ca-passphrase
+```
+
+This will prompt you for the passphrase and verify if it's correct without going through the entire certificate generation process. You can also specify a different CA name:
+
+```
+make CANAME=myca test-ca-passphrase
+```
+
 ## Issuing Certificates
 
 To issue a certificate for a site, just run
