@@ -17,6 +17,16 @@ config.mk: | config.mk.template
 ca:
 	$(MAKE) $(CADIR)/$(CANAME)CA.key $(CADIR)/$(CANAME)CA.pem
 
+# Test the passphrase for a CA key
+.PHONY: test-ca-passphrase
+test-ca-passphrase:
+	@if [ ! -f "$(CADIR)/$(CANAME)CA.key" ]; then \
+		echo "CA key not found at $(CADIR)/$(CANAME)CA.key"; \
+		exit 1; \
+	fi
+	@echo "Testing passphrase for $(CADIR)/$(CANAME)CA.key..."
+	@openssl rsa -check -noout -in "$(CADIR)/$(CANAME)CA.key" && echo "Passphrase is correct!"
+
 TARGET := $(firstword $(MAKECMDGOALS))
 DOMAIN := $(subst $(CANAME)-,,$(basename $(notdir $(TARGET))))
 .PRECIOUS: $(SITEDIR)/$(DOMAIN).key $(SITEDIR)/$(CANAME)-$(DOMAIN).csr $(SITEDIR)/$(DOMAIN).ext $(CADIR)/%CA.key $(CADIR)/%CA.pem
